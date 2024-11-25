@@ -18,6 +18,6 @@ replacements:
       kind: Pod
     fieldPaths:
     # Hangs when specifying ^$ anchor regex, hope we don't have multiple regex matches
-    - spec.containers.[name=logshipper]
+    - spec.containers.[name=^logshipper$]
     options:
       create: true
