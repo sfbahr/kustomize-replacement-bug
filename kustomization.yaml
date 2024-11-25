@@ -1,0 +1,23 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- pod.yaml
+- sidecar.source.yaml
+
+replacements:
+- source:
+    group: ephemeral
+    version: v1
+    kind: Source
+    name: sidecar
+    fieldPath: spec.containers.[name=logshipper]
+  targets:
+  - select:
+      version: v1
+      kind: Pod
+    fieldPaths:
+    # Hangs when specifying ^$ anchor regex, hope we don't have multiple regex matches
+    - spec.containers.[name=logshipper]
+    options:
+      create: true

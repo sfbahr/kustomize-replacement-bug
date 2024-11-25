@@ -1,0 +1,13 @@
+apiVersion: ephemeral/v1
+kind: Source
+metadata:
+  name: sidecar
+  annotations:
+    # This resource is not output, only used for replacements
+    config.kubernetes.io/local-config: "true"
+spec:
+  containers:
+  - name: logshipper
+    image: alpine:latest
+    restartPolicy: Always
+    command: ['sh', '-c', 'tail -F /opt/logs.txt']
